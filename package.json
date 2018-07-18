@@ -1,0 +1,14 @@
+{
+  "name": "sagecoach_app_project",
+  "version": "1.0.0",
+  "description": "SageCoach Desktop App",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Andre Ruiz",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^2.0.5"
+  }
+}
