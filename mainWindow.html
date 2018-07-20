@@ -1,9 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>SageCoach Invoice Maker</title>
 </head>
 <body>
     <h1>InvoiceMaker</h1>
+    <h2>Sheet(s) that will be processed: </h2>
+    <ul class="list-group"></ul>
+    <button id="button" type="submit" class="btn btn-primary">make invoices</button>
 </body>
+
+<script>
+    const electron = require('electron');
+    const {ipcRenderer} = electron;
+    const buttn = document.querySelector('#button');
+    const ul = document.querySelector('ul')
+    buttn.addEventListener('click', submit_invoices);
+    ipcRenderer.on('sheet:add', function(e, item){
+        const li = document.createElement('li');
+        li.className = "list-group-item"
+        const itemText = document.createTextNode(item);
+        li.appendChild(itemText);
+        ul.appendChild(li);
+    });
+
+    function submit_invoices(e){    
+        ipcRenderer.send('invoice:make', 'str');
+    }
+
+</script>
 </html>
