@@ -1,5 +1,3 @@
-// import { prependListener } from 'cluster';
-
 global.window = {document: {createElementNS: () => {return {}} }};
 global.navigator = {};
 global.btoa = () => {};
@@ -140,11 +138,11 @@ function createPDF(results){
             doc.setFontType("normal");
             doc.setFontSize(16);
             doc.text("Invoice #: " + invNum.toString(), 0, 20);
-            doc.text("Date of invoice " + journalEntry.toString(), 0, 30);
+            doc.text("Date of invoice: " + journalEntry.toString(), 0, 30);
             doc.text("Description: " + description.toString(), 0, 40);
-            doc.text("Account Number : " + accountNum.toString(), 0, 50);
-            doc.text("Total Amount Due : " + totalCharge.toString(), 0, 60);
-            doc.text("Date of Usage : " + serviceDate.toString(), 0, 70);
+            doc.text("Account Number: " + accountNum.toString(), 0, 50);
+            doc.text("Total Amount Due: " + totalCharge.toString(), 0, 60);
+            doc.text("Date of Usage: " + serviceDate.toString(), 0, 70);
             doc.setFontStyle("bold");
             doc.setFontSize(12);
             doc.text("Note: SageCoach trips are billed according to the following:", 0, 100);
