@@ -54,7 +54,6 @@ function send_data(data){
 
 // Listen for button
 ipcMain.on('invoice:make', function(e, item){
-    console.log(list_sheets.length);
     if (list_size != 0){
         for(k = 0; k < list_sheets.length; k++){
             if(list_sheets[k] == ''){
@@ -68,7 +67,6 @@ ipcMain.on('invoice:make', function(e, item){
             createPDF(data);
         }
     }else{
-        console.log("no sheet!");
         mainWindow.webContents.send('alert:sheet', 'str');
     }
     list_sheets.length = 0;
@@ -178,8 +176,6 @@ function createPDF(results){
         }
 
         var file_path = path.join(os.homedir(),'Desktop','SageCoach_Invoices',"InvoiceNum"+invNum.toString()+'.pdf')
-
-        console.log("Just made invoice: " + invNum.toString())
         fs.outputFile(file_path, data, function (err) {
             // console.log(err); // null if no err
         });
