@@ -35,7 +35,7 @@
     ipcRenderer.on('sheet:add', function(e, item){
         const li = document.createElement('li');
         const button_delete =  document.createElement('button')
-        button_delete.className = "btn btn-primary"
+        button_delete.className = "btn btn-primary-sm"
         button_delete.id = elem_counter.toString();
         li.className = "list-group-item";
         const x_text = document.createTextNode("x");
@@ -66,6 +66,7 @@
 
     ipcRenderer.on('del:all', function(e, item){
         $(".list-group").empty();
+        alert("Done!! Check your desktop, there will be a folder called SageCoach_Invoices");
     })
 
     

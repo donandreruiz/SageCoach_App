@@ -33,7 +33,7 @@ app.on('ready', function(){
     const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
     //Insert main Menu
     Menu.setApplicationMenu(mainMenu)
-    mainWindow.setSize(350,500)
+    mainWindow.setSize(450,500)
 
 });
 
