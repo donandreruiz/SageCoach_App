@@ -11,6 +11,7 @@ var fs = require('fs');
 var jsPDF = require('jspdf');
 var fs = require('fs-extra');
 var Papa = require('papaparse')
+var list_size = 0;
 var list_sheets = [];
 const{app, BrowserWindow, Menu, ipcRenderer, ipcMain} = electron;
 let mainWindow;
@@ -32,6 +33,7 @@ app.on('ready', function(){
     const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
     //Insert main Menu
     Menu.setApplicationMenu(mainMenu)
+    mainWindow.setSize(350,500)
 
 });
 
@@ -45,27 +47,40 @@ function send_data(data){
         split_data = data[0].split('\\');
         parsed_data = split_data[split_data.length-1]
     }
+    list_size += 1;
     mainWindow.webContents.send('sheet:add', parsed_data);
 }
 
 
 // Listen for button
 ipcMain.on('invoice:make', function(e, item){
-    if (list_sheets.length != 0){
+    console.log(list_sheets.length);
+    if (list_size != 0){
         for(k = 0; k < list_sheets.length; k++){
-            console.log(list_sheets[k][0])
+            if(list_sheets[k] == ''){
+                continue;
+            }
             var workbook = XLSX.readFile(list_sheets[k][0]);
             var sheet_name_list = workbook.SheetNames;
             var xlData = XLSX.utils.sheet_to_csv(workbook.Sheets[sheet_name_list[0]]);
             var results = Papa.parse(xlData);
-            var data = results.data
-            createPDF(data)
+            var data = results.data;
+            createPDF(data);
         }
     }else{
         console.log("no sheet!");
+        mainWindow.webContents.send('alert:sheet', 'str');
     }
-    list_sheets.length = 0
+    list_sheets.length = 0;
+    mainWindow.webContents.send('del:all', 'str');
 });
+
+// Listen for button
+ipcMain.on('del:item', function(e, item){
+    list_size -= 1;
+    list_sheets[item] = '';
+});
+
 
 // creates PDFs
 function createPDF(results){
